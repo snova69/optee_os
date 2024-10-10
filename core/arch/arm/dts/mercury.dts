@@ -1,0 +1,54 @@
+// SPDX-License-Identifier: BSD-2-Clause
+/*
+ *  Copyright (c) 2024, Cortina Access
+ */
+
+/dts-v1/;
+
+/ {
+        apb_pclk: apb_pclk {
+                compatible = "fixed-clock";
+                #clock-cells = <0>;
+                clock-frequency = <125000000>;
+        };
+
+	uart0: uart@f4329188 { /* Console port */
+		device_type = "serial";
+		compatible = "cortina-access,serial";
+		reg = <0x00000000 0xf4329188 0x0 0x30>;
+		clocks = <&apb_pclk>;
+	};
+
+	uart1: uart@f43291b8 {
+		device_type = "serial";
+		compatible = "cortina-access,serial";
+		reg = <0x00000000 0xf43291b8 0x0 0x30>;
+		clocks = <&apb_pclk>;
+	};
+
+
+	otp: otp@fff80300 {
+		compatible = "cortina,cortina-otp";
+		#address-cells = <1>;
+		#size-cells = <1>;
+		reg = <0x0 0xfff80300 0x0 0x100>;
+
+		uuid: uuid@060 {
+			reg = <0x60 0x4>;
+		};
+		hvsid: hvsid@64 {
+			reg = <0x64 0x4>;
+		};
+		phy_param: param@6c {
+			reg = <0x6c 0x4>;
+		};
+		phy_patch: patch@70 {
+			reg = <0x70 0x10>;
+		};
+		phy_calibration: calib@80 {
+			reg = <0x80 0x20>;
+		};
+	};
+
+
+};
